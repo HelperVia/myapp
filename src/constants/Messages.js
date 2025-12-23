@@ -1,0 +1,19 @@
+export const MESSAGE_SENDER_CUSTOMER="C";
+export const MESSAGE_SENDER_AGENT="A";
+export const MESSAGE_SENDER_SYSTEM="S";
+
+
+export const MESSAGE_RECEIVER_CUSTOMER="C";
+export const MESSAGE_RECEIVER_AGENT="A";
+export const MESSAGE_RECEIVER_BOTH="B";
+
+export const MESSAGE_SEND_TYPE_MANUEL="M";
+export const MESSAGE_SEND_TYPE_AUTO="A";
+
+
+export const MESSAGE_READ_AGENT_STATE="Y";
+export const MESSAGE_UNREAD_AGENT_STATE="N";
+
+
+export const MESSAGE_READ_USER_STATE="Y";
+export const MESSAGE_UNREAD_USER_STATE="N";

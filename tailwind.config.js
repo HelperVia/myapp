@@ -1,0 +1,68 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+    content: [
+        "./src/**/*.{js,ts,jsx,tsx,mdx}",
+        "./public/**/*.{js,ts,jsx,tsx,mdx}",
+
+    ],
+    theme: {
+        extend: {
+            colors:{
+                "bg-color-1":"#f5f6fa",
+                "hv-color-1":"#e5e5e5",
+                "hv-color-2":"#999999",
+                "hv-color-3":"#757a91",
+                "hv-color-4":"#dbdbdb",
+                "hv-color-5":"#363636",
+                "hv-color-6":"#cecece",
+                "hv-color-7":"#ff612f",
+                "hv-color-8":"#080a3c",
+                "hv-color-9":"#b5b5b5",
+                "hv-color-10":"#d93312",
+                "hv-color-11":"#ffecec",
+                "hv-color-12":"#f5f5f5",
+                "hv-color-13":"#515365",
+                "hv-color-14":"#e5e9f2",
+                "hv-color-15":"#fbfbfb",
+                "hv-color-16":"#424d57",
+                "hv-color-17":"#444444",
+                "hv-color-18":"#8094ae",
+                "hv-color-19":"#3d2070",
+                "hv-color-20":"#3d3d3d",
+                "hv-color-21":"#ebebeb",
+                "hv-color-22":"#515151",
+                "hv-color-23":"#e5e5e6",
+                "hv-color-24":"#141A21",
+                "nav-item-icon":"#3d454d",
+            },
+            boxShadow: {
+                'sidebar': '0 4px 4px rgba(66, 11, 161, 0.2)',
+            },
+            margin:{
+
+            },
+            gap: {
+                '12': '12px',
+            },
+            fontWeight: {
+                thin: '100',
+                hairline: '100',
+                extralight: '200',
+                light: '300',
+                normal: '400',
+                medium: '500',
+                semibold: '600',
+                bold: '700',
+                extrabold: '800',
+                'extra-bold': '800',
+                black: '900',
+            },
+            fontFamily: {
+                'roboto': ['Roboto', '-apple-system', 'system-ui','BlinkMacSystemFont','Segoe UI','Helvetica Neue','Arial','sans-serif'],
+                'inter': ['Inter', '-apple-system', 'system-ui','BlinkMacSystemFont','Segoe UI','Helvetica Neue','Arial','sans-serif' ],
+            }
+        },
+    },
+    plugins: [],
+}
+

@@ -1,13 +1,67 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --color-bg-color-1:var(--bg-color-1);
+  --color-hv-color-1:var(--hv-color-1);
+  --color-hv-color-2:var(--hv-color-2);
+  --color-hv-color-3:var(--hv-color-3);
+  --color-hv-color-4:var(--hv-color-4);
+  --color-hv-color-5:var(--hv-color-5);
+  --color-hv-color-6:var(--hv-color-6);
+  --color-hv-color-7:var(--hv-color-7);
+  --color-hv-color-8:var(--hv-color-8);
+  --color-hv-color-9:var(--hv-color-9);
+  --color-hv-color-10:var(--hv-color-10);
+  --color-hv-color-11:var(--hv-color-11);
+  --color-hv-color-12:var(--hv-color-12);
+  --color-hv-color-13:var(--hv-color-13);
+  --color-hv-color-14:var(--hv-color-14);
+  --color-hv-color-15:var(--hv-color-15);
+  --color-hv-color-16:var(--hv-color-16);
+  --color-hv-color-17:var(--hv-color-17);
+  --color-hv-color-18:var(--hv-color-18);
+  --color-hv-color-19:var(--hv-color-19);
+  --color-hv-color-20:var(--hv-color-20);
+  --color-hv-color-21:var(--hv-color-21);
+  --color-hv-color-22:var(--hv-color-22);
+  --color-hv-color-23:var(--hv-color-23);
+  --color-hv-color-24:var(--hv-color-24);
+  --color-nav-item-icon:var(--nav-item-icon);
 }
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --bg-color-1: #f5f6fa;
+  --hv-color-1: #e5e5e5;
+  --hv-color-2: #999999;
+  --hv-color-3: #757a91;
+  --hv-color-4: #dbdbdb;
+  --hv-color-5: #363636;
+  --hv-color-6: #cecece;
+  --hv-color-7: #ff612f;
+  --hv-color-8: #080a3c;
+  --hv-color-9: #b5b5b5;
+  --hv-color-10: #d93312;
+  --hv-color-11: #ffecec;
+  --hv-color-12: #f5f5f5;
+  --hv-color-13: #515365;
+  --hv-color-14: #e5e9f2;
+  --hv-color-15: #fbfbfb;
+  --hv-color-16: #424d57;
+  --hv-color-17: #444444;
+  --hv-color-18: #8094ae;
+  --hv-color-19: #3d2070;
+  --hv-color-20: #3d3d3d;
+  --hv-color-21: #ebebeb;
+  --hv-color-22: #515151;
+  --hv-color-23: #e5e5e6;
+  --hv-color-24: #141A21;
+  --hv-color-25: #364a63;
+  --hv-color-26: #7e7f81;
+  --nav-item-icon: #3d454d;
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -15,10 +69,11 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+html,body{
+  height:100%;
 }
+
+
