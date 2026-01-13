@@ -4,14 +4,15 @@ import loginUserDomain from "@/domain/user/login";
 import { ApiResponse } from "@/shared/lib/api/response/api.response.server";
 import { LoginRequestSchema } from "@schemas/zod/api/auth/login.request.schema";
 import { toError } from "@/shared/lib/error/error.normalize";
-async function handler(data: UserLoginType) {
-  const parsed = LoginRequestSchema.safeParse(data);
+
+async function handler(req: UserLoginType) {
+  const parsed = LoginRequestSchema.safeParse(req);
   if (!parsed?.success) {
     return ApiResponse(toError(parsed.error));
   }
-  const response = await loginUserDomain(data);
+  const response = await loginUserDomain(req);
 
   return ApiResponse(response);
 }
 
-export const Login = ApiException(handler);
+export const Login = ApiException<{}, UserLoginType>(handler);

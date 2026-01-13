@@ -1,0 +1,10 @@
+import {
+  DEPARTMENT_STATUS_ACTIVE,
+  DEPARTMENT_STATUS_DELETED,
+  DEPARTMENT_STATUS_INACTIVE,
+} from "@constants/Department";
+
+export type DepartmentStatus =
+  | typeof DEPARTMENT_STATUS_ACTIVE
+  | typeof DEPARTMENT_STATUS_DELETED
+  | typeof DEPARTMENT_STATUS_INACTIVE;

@@ -38,32 +38,33 @@ export default function ChooseCompany() {
   };
   const SelectCompanyComponent = (): JSX.Element => (
     <React.Fragment>
-      {companies.map((company, i) => (
-        <div
-          key={i}
-          className="relative flex justify-between h-[120px] flex-col  mb-4 border border-hv-color-4 border-solid  hover:border-hv-color-9 p-[10px] rounded-[5px]"
-        >
-          <div className="text-hv-color-8">{company.company_name}</div>
-          {company.owner == "Y" && (
-            <div className=" absolute w-[50px] h-[20px] top-0 right-0 bg-hv-color-7 text-center text-[11px] text-white p-[5px] leading-[1]">
-              Owner
+      {companies instanceof Object &&
+        companies.map((company, i) => (
+          <div
+            key={i}
+            className="relative flex justify-between h-[120px] flex-col  mb-4 border border-hv-color-4 border-solid  hover:border-hv-color-9 p-[10px] rounded-[5px]"
+          >
+            <div className="text-hv-color-8">{company.company_name}</div>
+            {company.owner == "Y" && (
+              <div className=" absolute w-[50px] h-[20px] top-0 right-0 bg-hv-color-7 text-center text-[11px] text-white p-[5px] leading-[1]">
+                Owner
+              </div>
+            )}
+            <div>
+              <Button
+                onClick={() => chooseCompany(company.license_number)}
+                type="submit"
+                className="hv-button hv-default-button small outline"
+                loading={false}
+              >
+                <span>Go to Company</span>
+              </Button>
             </div>
-          )}
-          <div>
-            <Button
-              onClick={() => chooseCompany(company.license_number)}
-              type="submit"
-              className="hv-button hv-default-button small outline"
-              loading={false}
-            >
-              <span>Go to Company</span>
-            </Button>
+            <div className="text-hv-color-2 text-[9px] uppercase">
+              company created on {Timezone.convert(company.created_at).format()}
+            </div>
           </div>
-          <div className="text-hv-color-2 text-[9px] uppercase">
-            company created on {Timezone.convert(company.created_at).format()}
-          </div>
-        </div>
-      ))}
+        ))}
     </React.Fragment>
   );
 

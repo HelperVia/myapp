@@ -1,10 +1,16 @@
-import { UseFormRegister, RegisterOptions, Path } from "react-hook-form";
+import {
+  UseFormRegister,
+  RegisterOptions,
+  Path,
+  FieldValues,
+} from "react-hook-form";
 
-export function emailValidation<T extends { email: string }>(
+export function emailValidation<T extends FieldValues>(
   register: UseFormRegister<T>,
-  props?: RegisterOptions<T>
+  props?: RegisterOptions<T>,
+  registerName = "fullname"
 ) {
-  return register("email" as Path<T>, {
+  return register(registerName as Path<T>, {
     required: "Email Address is required",
     pattern: {
       value: /^\S+@\S+$/i,
@@ -14,21 +20,23 @@ export function emailValidation<T extends { email: string }>(
   });
 }
 
-export function passwordValidation<T extends { password: string }>(
+export function passwordValidation<T extends FieldValues>(
   register: UseFormRegister<T>,
-  props?: RegisterOptions<T>
+  props?: RegisterOptions<T>,
+  registerName = "password"
 ) {
-  return register("password" as Path<T>, {
+  return register(registerName as Path<T>, {
     required: "Password is required",
     ...props,
   });
 }
 
-export function fullNameValidation<T extends { fullname: string }>(
+export function fullNameValidation<T extends FieldValues>(
   register: UseFormRegister<T>,
-  props?: RegisterOptions<T>
+  props?: RegisterOptions<T>,
+  registerName = "fullname"
 ) {
-  return register("fullname" as Path<T>, {
+  return register(registerName as Path<T>, {
     required: "Full Name is required",
     pattern: {
       value: /[a-zA-Z-ğüşöçİĞÜŞÖÇ]+ [a-zA-Z-ğüşöçİĞÜŞÖÇ]+[a-zA-Z-ğüşöçİĞÜŞÖÇ]$/,

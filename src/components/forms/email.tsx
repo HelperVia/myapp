@@ -1,4 +1,4 @@
-import { Alert, InputAdornment, TextField } from "@mui/material";
+import { TextField, TextFieldProps } from "@components/ui/forms";
 import { emailValidation } from "@lib/validation";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import {
@@ -6,62 +6,50 @@ import {
   FieldErrors,
   UseFormRegister,
   Path,
+  FieldValues,
 } from "react-hook-form";
 
-type EmailProps<T extends { email: string }> = {
+type EmailFieldProps<T extends FieldValues> = {
   register?: UseFormRegister<T>;
   trigger?: UseFormTrigger<T>;
-  setValue?: React.Dispatch<React.SetStateAction<string>>;
-  value: string;
   errors?: FieldErrors<T>;
-  disabled?: boolean;
-};
-export const Email = <T extends { email: string }>(props: EmailProps<T>) => {
-  const { register, trigger, setValue, value, errors, disabled } = props;
+  name?: string;
+} & TextFieldProps;
 
-  const onChange = async (value: string) => {
-    await trigger?.("email" as Path<T>);
-    setValue?.(value.trim());
+export const Email = <T extends FieldValues>(props: EmailFieldProps<T>) => {
+  const { register, trigger, errors, name = "email" } = props;
+
+  const onChangeEmail = async (e: any) => {
+    await trigger?.(name as Path<T>);
+    props?.onChange?.(e);
   };
+  const onBlurEmail = async (e: any) => {
+    await trigger?.(name as Path<T>);
+    props?.onBlur?.(e);
+  };
+
   return (
     <TextField
+      {...props}
       {...(register
-        ? emailValidation(register, {
-            onChange: (e) => onChange(e.target.value),
-          })
-        : { onChange: (e) => onChange(e.target.value) })}
-      value={value}
-      name="email"
-      autoComplete="email"
-      fullWidth
-      autoFocus={false}
-      disabled={disabled}
-      placeholder="Eg. agent@example.com"
-      size="small"
-      error={Boolean(errors?.email)}
-      helperText={
-        typeof errors?.email?.message === "string"
-          ? errors.email.message
+        ? emailValidation(
+            register,
+            {
+              onChange: (e) => onChangeEmail(e),
+              onBlur: (e) => onBlurEmail(e),
+            },
+            name
+          )
+        : {})}
+      autoComplete={name}
+      name={name}
+      placeholder={props?.placeholder ?? "E.g. agent@example.com"}
+      error={
+        typeof errors?.[name]?.message === "string"
+          ? errors?.[name].message
           : undefined
       }
-      sx={{
-        ".MuiInputBase-root": {
-          color: "currentColor",
-          height: "50px",
-        },
-      }}
-      slotProps={{
-        htmlInput: {
-          className: "!text-hv-color-3",
-        },
-        input: {
-          startAdornment: (
-            <InputAdornment position="start">
-              <EmailOutlinedIcon />
-            </InputAdornment>
-          ),
-        },
-      }}
+      startAdornment={<EmailOutlinedIcon />}
     />
   );
 };

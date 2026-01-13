@@ -6,7 +6,7 @@ export default function Loading() {
   return (
     <div>
       <Box sx={{ width: "100%", position: "absolute", top: 0 }}>
-        <LinearProgress color="grey" />
+        <LinearProgress color="brandGrey" />
       </Box>
     </div>
   );

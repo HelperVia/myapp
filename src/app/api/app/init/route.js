@@ -1,9 +1,10 @@
 import { ApiResponse } from "@shared/lib/api/response/api.response.server";
 import { ApiException } from "@shared/lib/exception/api.exception";
-import API from "@shared/lib/api/api.server";
+import API from "@lib/api/api.server";
 
 async function handler(req) {
-  const response = await API.post("app/init");
+  const Service = await API();
+  const response = await Service.post("app/init");
 
   return ApiResponse(response);
 }

@@ -4,13 +4,14 @@ export const ApiResponse = async <T>(
   response: any
 ): Promise<ResponseClientTypes<T>> => {
   try {
-    let data = await response.json();
+    const data = await response.json();
 
     if (data?.success) {
       return {
         ok: true,
         data: data?.data || {},
         message: data?.message || "",
+        status: data?.status,
         error: null,
       };
     }
@@ -34,14 +35,16 @@ export const ApiResponse = async <T>(
     return {
       ok: false,
       error: errorMessage,
+      status: data?.status,
     };
   } catch (e) {
-    if (process.env.NEXT_PUBLIC_DEBUG == "TRUE") {
+    if (process.env.NEXT_PUBLIC_DEBUG === "true") {
       console.log(e);
     }
     return {
       ok: false,
       error: defaultErrorMessage,
+      status: 500,
     };
   }
 };

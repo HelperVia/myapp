@@ -1,4 +1,5 @@
-import { TeamType } from "@/types/team/agent/agent.type";
+import { TeamType } from "@/types/team/teams.type";
+
 import { AccountType } from "@/types/users/account.type";
 export type ApiInitFetchType = {
   token: string;

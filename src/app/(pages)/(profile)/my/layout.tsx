@@ -1,6 +1,6 @@
 "use client";
 import { apiFetch } from "@lib/api/api.fetch";
-import Wrapper from "./wrapper";
+import Wrapper from "./Wrapper";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "@store/index";
@@ -9,6 +9,7 @@ import { setAccount } from "@store/user/user.slice";
 import { setAllAgents } from "@/store/agent/agent.slice";
 import { setConnectionToken } from "@/store/app/app.slice";
 import { ApiInitFetchType } from "@/types/api/app/init.fetch.type";
+import { setAllDepartments } from "@/store/departments/departments.slice";
 export default function My({ children }: any) {
   const [status, setStatus] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
@@ -23,6 +24,7 @@ export default function My({ children }: any) {
       dispatch(setConnectionToken(data?.data?.token));
       dispatch(setAccount(data?.data?.account));
       dispatch(setAllAgents(data?.data?.teams?.agents));
+      dispatch(setAllDepartments(data?.data?.teams?.departments));
     }
   };
 

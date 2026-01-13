@@ -1,73 +1,59 @@
-import { InputAdornment, TextField } from "@mui/material";
+import { TextField, TextFieldProps, TextFieldSize } from "@components/ui/forms";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { fullNameValidation } from "@lib/validation";
-import { UseFormRegister, UseFormTrigger, FieldErrors } from "react-hook-form";
+import {
+  UseFormRegister,
+  UseFormTrigger,
+  FieldErrors,
+  FieldValues,
+} from "react-hook-form";
+import { ChangeEvent } from "react";
 
-type fullNameType<T extends { fullname: string }> = {
+type FullNameFieldProps<T extends FieldValues> = {
   register?: UseFormRegister<T>;
   trigger?: UseFormTrigger<T>;
-  setValue?: React.Dispatch<React.SetStateAction<string>>;
-  value?: string;
   errors?: FieldErrors<T>;
-};
+  name?: string;
+} & TextFieldProps;
 
-export const FullName = <T extends { fullname: string }>(
-  props: fullNameType<T>
+export const FullName = <T extends FieldValues>(
+  props: FullNameFieldProps<T>
 ) => {
-  const { trigger, register, setValue, value, errors } = props;
+  const { trigger, register, errors, name = "fullname" } = props;
 
-  const onChangeName = async (value: string) => {
+  const onChangeName = async (e: ChangeEvent<HTMLInputElement>) => {
     await trigger?.();
-    setValue?.(value);
+    props?.onChange?.(e);
   };
-  const onBlurName = async (value: String) => {
+  const onBlurName = async (e: ChangeEvent<HTMLInputElement>) => {
     await trigger?.();
-    setValue?.(value.trim());
   };
 
   return (
     <TextField
+      {...props}
       {...(register
-        ? fullNameValidation(register, {
-            onChange: (e) => {
-              onChangeName(e.target.value).then(() => {});
+        ? fullNameValidation(
+            register,
+            {
+              onChange: (e) => {
+                onChangeName(e).then(() => {});
+              },
+              onBlur: (e) => {
+                onBlurName(e).then(() => {});
+              },
             },
-            onBlur: (e) => {
-              onBlurName(e.target.value).then(() => {});
-            },
-          })
+            name
+          )
         : {})}
-      autoComplete="fullname"
-      name="fullname"
-      autoFocus
-      value={value}
-      fullWidth
-      placeholder="Full Name"
-      size="small"
-      error={Boolean(errors?.fullname)}
-      helperText={
-        typeof errors?.fullname?.message === "string"
-          ? errors.fullname.message
+      autoComplete={name}
+      name={name}
+      error={
+        typeof errors?.[name]?.message === "string"
+          ? errors?.[name].message
           : undefined
       }
-      sx={{
-        ".MuiInputBase-root": {
-          color: "currentColor",
-          height: "50px",
-        },
-      }}
-      slotProps={{
-        htmlInput: {
-          className: "!text-hv-color-3 border-none",
-        },
-        input: {
-          startAdornment: (
-            <InputAdornment position="start">
-              <PersonOutlineOutlinedIcon />
-            </InputAdornment>
-          ),
-        },
-      }}
+      startAdornment={<PersonOutlineOutlinedIcon />}
     />
   );
 };

@@ -5,10 +5,9 @@ import Button from "@mui/material/Button";
 
 import { Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { Tooltip } from "@components/ui/tooltip/Tooltip";
+import { Tooltip } from "@/components/ui/Tooltip/Tooltip";
 
 export const ConfirmForm = ({
-  loading,
   title,
   subtitle = "",
   confirmComponent = <React.Fragment></React.Fragment>,
@@ -53,7 +52,7 @@ export const ConfirmForm = ({
         columnSpacing={3}
         container
       >
-        <Button onClick={cancel} color="grey" variant="outlined">
+        <Button onClick={cancel} color="brandGrey" variant="outlined">
           Cancel
         </Button>
         {confirmComponent}

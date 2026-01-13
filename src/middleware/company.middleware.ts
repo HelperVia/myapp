@@ -1,5 +1,5 @@
+import { YES } from "@/shared/constants/YesNo";
 import { NextRequest, NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
 
 export async function companyMiddleware(req: NextRequest, token: any) {
   const pathname = req.nextUrl.pathname;
@@ -7,9 +7,19 @@ export async function companyMiddleware(req: NextRequest, token: any) {
   const isCompanyChoosePage = companyChooseRoute.some((r) =>
     pathname.startsWith(r)
   );
-  if (!token?.licenseNumber && !isCompanyChoosePage) {
-    return NextResponse.redirect(new URL("/choose-company", req.url));
+  if (
+    !token?.licenseNumber &&
+    !isCompanyChoosePage &&
+    token?.emailVerify == YES
+  ) {
+    return {
+      stop: true,
+      res: NextResponse.redirect(new URL("/choose-company", req.url)),
+    };
   }
 
-  return null;
+  return {
+    stop: false,
+    res: NextResponse.next(),
+  };
 }

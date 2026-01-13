@@ -1,7 +1,6 @@
 import React from "react";
-import { HeaderContainer } from "@components/layout/HeaderContainer";
-import { Header } from "@components/layout/Header";
-import { AgentUserCard } from "./agent-user-card";
+
+import { AgentCard } from "./index";
 import { DetailsCard } from "../chat/chatRightContent/details-card";
 import { DepartmentNameCard } from "./department-name-card";
 
@@ -22,7 +21,7 @@ export const AgentSidebar = (props) => {
       {agent && (
         <React.Fragment>
           <div className="p-5">
-            <AgentUserCard agent={agent} />
+            <AgentCard agent={agent} />
           </div>
 
           {agent.departments && Object.keys(agent.departments).length > 0 && (

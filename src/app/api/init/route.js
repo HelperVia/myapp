@@ -1,10 +1,11 @@
 import { NextResponse, NextRequest } from "next/server";
 
-import API from "@shared/lib/api/api.server";
+import API from "@lib/api/api.server";
 
 export async function POST(request) {
   try {
-    const response = await API.post("initialize");
+    const Service = await API();
+    const response = await Service.post("initialize");
 
     return NextResponse.json(response?.data, {
       status: response?.status,

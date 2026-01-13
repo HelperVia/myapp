@@ -1,8 +1,11 @@
+import { AgentAwaysType } from "./agent-away.type";
+import { AgentStatus } from "./agent-status.type";
+
 export type AgentType = {
   active_chat: number;
   agent_name: string;
   auto_assign: string;
-  away: string;
+  away: AgentAwaysType;
   chat_limit: number;
   created_at: string;
   email: string;
@@ -11,9 +14,6 @@ export type AgentType = {
   role: string;
   role_description: string;
   source: string;
-  status: string;
-};
-
-export type TeamType = {
-  agents: AgentType[];
+  status: AgentStatus;
+  job_title?: string;
 };

@@ -1,9 +1,8 @@
 "use client";
 import React, { useState } from "react";
 
-import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
-
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { AuthContainer } from "../AuthContainer";
 import { Alert, InputAdornment, TextField } from "@mui/material";
@@ -15,17 +14,17 @@ import { useSession } from "next-auth/react";
 import { LoginFormValues } from "@/types/form/form";
 export default function Login() {
   const { data } = useSession();
+  const router = useRouter();
 
-  console.log(data);
   const {
     register,
     trigger,
+    getValues,
+    setValue,
     getFieldState,
     formState: { errors },
   } = useForm<LoginFormValues>();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState("");
 
@@ -35,12 +34,17 @@ export default function Login() {
     if (!getFieldState("email").error && !getFieldState("password").error) {
       setLoading(true);
 
+      const email = getValues("email");
+      const password = getValues("password");
       const result = await signIn("credentials", {
         redirect: false,
         email,
         password,
       });
 
+      if (result?.ok) {
+        router.push("/login");
+      }
       if (result?.error) {
         setLoading(false);
         setLoginError(result?.error);
@@ -72,8 +76,11 @@ export default function Login() {
                   trigger={trigger}
                   register={register}
                   errors={errors}
-                  setValue={setEmail}
-                  value={email}
+                  label="Email"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setValue("email", e.target.value)
+                  }
+                  value={getValues("email")}
                 />
               </div>
             </div>
@@ -83,8 +90,11 @@ export default function Login() {
                   trigger={trigger}
                   register={register}
                   errors={errors}
-                  setValue={setPassword}
-                  value={password}
+                  label="Password"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setValue("password", e.target.value)
+                  }
+                  value={getValues("password")}
                 />
               </div>
             </div>

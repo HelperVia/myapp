@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthToken } from "@/shared/utils/next-auth/auth";
-
+import { getSessionCookieName } from "@/shared/utils/next-auth/auth";
+import { authOptions } from "@lib/next-auth/authOptions";
 export async function authMiddleware(req: NextRequest) {
-  const token = await getAuthToken(
-    req,
-    process.env.NEXT_PUBLIC_APP_PREFIX + "-token"
-  );
+  const token = await getAuthToken(req, getSessionCookieName(authOptions));
 
   const pathname = req.nextUrl.pathname;
   const protectedRoutes = [
@@ -19,12 +17,24 @@ export async function authMiddleware(req: NextRequest) {
   const isAuthRoute = authRoutes.some((r) => pathname.startsWith(r));
   if (!token && isProtected) {
     const loginUrl = new URL("/login", req.url);
-    return NextResponse.redirect(loginUrl);
+    return {
+      token: token,
+      res: NextResponse.redirect(loginUrl),
+      stop: true,
+    };
   }
 
   if (token && isAuthRoute) {
-    return NextResponse.redirect(new URL("/my", req.url));
+    return {
+      token: token,
+      res: NextResponse.redirect(new URL("/my", req.url)),
+      stop: true,
+    };
   }
 
-  return token;
+  return {
+    token: token,
+    res: NextResponse.next(),
+    stop: false,
+  };
 }

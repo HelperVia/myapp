@@ -1,6 +1,7 @@
-import API from "@shared/lib/api/api.server";
+import API from "@lib/api/api.server";
 export const validateInviteEmail = async (email: string) => {
-  return await API.post("teams/agent/invite/email/validate", {
+  const Service = await API();
+  return await Service.post("teams/agent/invite/email/validate", {
     email: email,
   });
 };

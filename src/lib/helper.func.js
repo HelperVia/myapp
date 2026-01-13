@@ -57,11 +57,19 @@ export const extractInitials = (text) => {
 
 export const getColorFromUuid = (uuid) => {
   const colors = [
-    deepPurple[500],
-    deepOrange[500],
-    lightGreen[500],
-    red[800],
-    blue[500],
+    "#374151",
+    "#6b7280",
+    "#8b5cf6",
+    "#3b82f6",
+    "#22c55e",
+    "#10b981",
+    "#14b8a6",
+    "#ef4444",
+    "#f43f5e",
+    "#f97316",
+    "#f59e0b",
+    "#ec4899",
+    "#6366f1",
   ];
   const hashStr = uuid.replace(/-/g, "").substring(0, 8);
   const hash = parseInt(hashStr, 16);

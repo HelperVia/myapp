@@ -1,9 +1,10 @@
 import NextAuth, { DefaultSession, DefaultUser } from "next-auth";
-
+import { Yes, No } from "@shared/constants/YesNo";
 declare module "next-auth" {
   interface Session {
     accessToken?: string;
     licenseNumber?: string;
+    emailVerify?: typeof Yes | typeof No;
 
     user: {
       id: string;
@@ -13,6 +14,7 @@ declare module "next-auth" {
   interface User extends DefaultUser {
     accessToken?: string;
     licenseNumber?: string;
+    emailVerify?: typeof Yes | typeof No;
   }
 }
 
@@ -21,5 +23,6 @@ declare module "next-auth/jwt" {
     accessToken?: string;
     id?: string;
     licenseNumber?: string;
+    emailVerify?: typeof Yes | typeof No;
   }
 }

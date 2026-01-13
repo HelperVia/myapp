@@ -1,75 +1,50 @@
-import { Alert, InputAdornment, TextField } from "@mui/material";
+import { TextField, TextFieldProps, TextFieldSize } from "@components/ui/forms";
 import { passwordValidation } from "@lib/validation";
 import HttpsOutlinedIcon from "@mui/icons-material/HttpsOutlined";
 import {
   FieldErrors,
+  FieldValues,
   Path,
   UseFormRegister,
   UseFormTrigger,
 } from "react-hook-form";
-type PasswordValues<T extends { password: string }> = {
+
+type PasswordFieldProps<T extends FieldValues> = {
   register?: UseFormRegister<T>;
   trigger?: UseFormTrigger<T>;
   errors?: FieldErrors<T>;
-  setValue?: React.Dispatch<React.SetStateAction<string>>;
-  value?: string;
-  disabled?: boolean;
-};
-export const Password = <T extends { password: string }>(
-  props: PasswordValues<T>
+  name?: string;
+} & TextFieldProps;
+
+export const Password = <T extends FieldValues>(
+  props: PasswordFieldProps<T>
 ) => {
-  const {
-    trigger,
-    register,
-    errors,
-    setValue,
-    value,
-    disabled = false,
-  } = props;
+  const { trigger, register, errors, name = "password" } = props;
 
   const onChange = async (value: string) => {
-    await trigger?.("password" as Path<T>);
-
-    setValue?.(value.trim());
+    await trigger?.(name as Path<T>);
   };
   return (
     <TextField
+      {...props}
       {...(register
-        ? passwordValidation(register, {
-            onChange: (e) => onChange(e.target.value),
-          })
-        : { onChange: (e) => onChange(e.target.value) })}
+        ? passwordValidation(
+            register,
+            {
+              onChange: (e) => onChange(e.target.value),
+            },
+            name
+          )
+        : {})}
       type="password"
-      name="password"
-      defaultValue={value}
-      disabled={disabled}
-      fullWidth
+      name={name}
       placeholder="******"
-      size="small"
-      error={Boolean(errors?.password)}
-      helperText={
-        typeof errors?.password?.message === "string"
-          ? errors.password.message
+      error={
+        typeof errors?.[name]?.message === "string"
+          ? errors?.[name].message
           : undefined
       }
-      sx={{
-        ".MuiInputBase-root": {
-          color: "currentColor",
-          height: "50px",
-        },
-      }}
-      slotProps={{
-        htmlInput: {
-          className: "!text-hv-color-3",
-        },
-        input: {
-          startAdornment: (
-            <InputAdornment position="start">
-              <HttpsOutlinedIcon />
-            </InputAdornment>
-          ),
-        },
-      }}
+      startAdornment={<HttpsOutlinedIcon />}
     />
   );
 };

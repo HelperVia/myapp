@@ -10,11 +10,13 @@ type createAuthCookiesType = {
   nonce?: CookieOption;
 };
 
+const DEFAULT_COOKIE_PREFIX = "yd";
+
 export const createAuthCookies = (
   props: createAuthCookiesType = {}
 ): CookiesOptions => {
   const {
-    prefix = process.env.NEXT_PUBLIC_APP_PREFIX,
+    prefix = process.env.NEXT_PUBLIC_APP_PREFIX ?? DEFAULT_COOKIE_PREFIX,
     sessionToken,
     callbackUrl,
     csrfToken,
@@ -29,7 +31,7 @@ export const createAuthCookies = (
         httpOnly: true,
         sameSite: "lax",
         path: "/",
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
       },
     },
     callbackUrl: callbackUrl ?? {
@@ -37,7 +39,7 @@ export const createAuthCookies = (
       options: {
         sameSite: "lax",
         path: "/",
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
       },
     },
     csrfToken: csrfToken ?? {
@@ -46,7 +48,7 @@ export const createAuthCookies = (
         httpOnly: true,
         sameSite: "lax",
         path: "/",
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
       },
     },
     pkceCodeVerifier: pkceCodeVerifier ?? {
@@ -55,7 +57,7 @@ export const createAuthCookies = (
         httpOnly: true,
         sameSite: "lax",
         path: "/",
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
         maxAge: 900,
       },
     },
@@ -65,7 +67,7 @@ export const createAuthCookies = (
         httpOnly: true,
         sameSite: "lax",
         path: "/",
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
         maxAge: 900,
       },
     },
@@ -75,7 +77,7 @@ export const createAuthCookies = (
         httpOnly: true,
         sameSite: "lax",
         path: "/",
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
       },
     },
   };

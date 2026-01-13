@@ -115,11 +115,11 @@ const UserSettings = () => {
 
           <div className="">
             <Button
-              color="orange"
+              color="brandOrange"
               variant="outlined"
               fullWidth
               onClick={setNameAction}
-              className="!justify-between"
+              className="justify-between!"
               loading={loading}
               endIcon={<KeyboardArrowRightOutlinedIcon />}
             >

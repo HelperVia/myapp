@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { Alert } from "@mui/material";
 import { Password } from "@components/forms/password";
 import { Email } from "@components/forms/email";
-import { PrimaryButton } from "@components/buttons/primary-button";
+
+import Button from "@components/ui/Button";
 import { FullName } from "./fullname";
 import { SignupFormValues } from "@/types/form/form";
 import { apiFetch } from "@/lib/api/api.fetch";
@@ -21,16 +22,19 @@ export const Signup = (props: {
   const {
     register,
     trigger,
+    setValue,
+    getValues,
     getFieldState,
     formState: { errors },
   } = useForm<SignupFormValues>();
-  const [emailValue, setEmail] = useState<string>(email);
-  const [passwordValue, setPassword] = useState<string>("");
+
   const [loading, setLoading] = useState<boolean>(false);
-  const [nameValue, setName] = useState<string>("");
   const { data, update } = useSession();
   const [signupError, setSignupError] = useState<string>("");
 
+  useEffect(() => {
+    setValue("email", email);
+  }, []);
   const signupAction = async () => {
     await trigger();
 
@@ -45,10 +49,10 @@ export const Signup = (props: {
         {
           method: "POST",
           body: JSON.stringify({
-            email: emailValue,
-            password: passwordValue,
+            email: getValues("email"),
+            password: getValues("password"),
             ...(invite_code ? { invite_code: invite_code } : {}),
-            fullname: nameValue,
+            fullname: getValues("fullname"),
           }),
         },
         { loading: false }
@@ -60,12 +64,6 @@ export const Signup = (props: {
       }
 
       if (response?.ok) {
-        await update({
-          accessToken: response?.data?.token,
-          id: response?.data?.user?.id,
-          email: response?.data?.user?.email,
-          name: response?.data?.user?.name,
-        });
       }
     }
   };
@@ -92,9 +90,15 @@ export const Signup = (props: {
               <FullName
                 register={register}
                 trigger={trigger}
+                label="Fullname"
+                placeholder="Fullname"
                 errors={errors}
-                setValue={setName}
-                value={nameValue}
+                size="medium"
+                name="fullname"
+                value={getValues("fullname")}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setValue("fullname", e.target.value);
+                }}
               />
             </div>
           </div>
@@ -104,8 +108,12 @@ export const Signup = (props: {
                 trigger={trigger}
                 register={register}
                 errors={errors}
-                setValue={setEmail}
-                value={emailValue}
+                label="Email"
+                size="medium"
+                name="email"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setValue("email", e.target.value)
+                }
                 disabled={invite_code !== null ? true : false}
               />
             </div>
@@ -113,17 +121,26 @@ export const Signup = (props: {
           <div className="mb-[.75rem]">
             <div className="relative text-[1rem] box-border">
               <Password
-                trigger={trigger}
                 register={register}
+                trigger={trigger}
+                label="Password"
                 errors={errors}
-                setValue={setPassword}
-                value={passwordValue}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setValue("password", e.target.value)
+                }
               />
             </div>
           </div>
-          <PrimaryButton onClick={signupAction} loading={loading}>
+
+          <Button
+            onClick={signupAction}
+            variant="primary"
+            loading={loading}
+            size="md"
+            fullWidth={true}
+          >
             Create Account
-          </PrimaryButton>
+          </Button>
         </div>
         <div className="mt-3">
           <p className="mt-4 text-[.9rem] text-hv-color-2">

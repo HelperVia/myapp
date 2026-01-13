@@ -16,9 +16,6 @@ export const Notification = (props) => {
     });
   };
 
-  useEffect(() => {
-    console.log(notify);
-  }, [notify]);
   return (
     <React.Fragment>
       {notify.open && (

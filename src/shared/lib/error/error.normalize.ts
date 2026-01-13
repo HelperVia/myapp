@@ -3,22 +3,23 @@ import { ZodError } from "zod";
 
 export const toError = (
   errorOrStatus?: unknown,
-  status?: number
+  status?: number,
+  debug?: string
 ): ErrorEnvelope => {
   if (typeof errorOrStatus === "number") {
-    return getErrorSchema(undefined, errorOrStatus);
+    return getErrorSchema(undefined, errorOrStatus, debug);
   }
 
   const error = errorOrStatus as ErrorPayload | ZodError | Error;
   if (error instanceof ZodError) {
     const parsed = parserZodError(error);
 
-    return getErrorSchema(parsed, status);
+    return getErrorSchema(parsed, status, debug);
   }
 
   if (looksLikeZodError(error)) {
     const parsed = parserZodError(error);
-    return getErrorSchema(parsed, status ?? 400);
+    return getErrorSchema(parsed, status ?? 400, debug);
   }
 
   if (
@@ -27,19 +28,21 @@ export const toError = (
   ) {
     const msg =
       error instanceof Error ? error.message : String((error as any).message);
-    return getErrorSchema(msg, status ?? 500);
+    return getErrorSchema(msg, status ?? 500, debug);
   }
 
-  return getErrorSchema(error, status);
+  return getErrorSchema(error, status, debug);
 };
 
 export const getErrorSchema = (
   error?: ErrorPayload,
-  status?: number
+  status?: number,
+  debug?: string
 ): ErrorEnvelope => {
   return {
     success: false,
     error: error ?? "Something went wrong, please try again",
+    debug: debug,
     status: status ?? 500,
   };
 };

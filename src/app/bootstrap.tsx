@@ -1,7 +1,7 @@
 "use client";
 import "./globals.css";
 import "@public/app.scss";
-
+import "./app.scss";
 import React, { Suspense, useEffect } from "react";
 import Loading from "@components/loading/initialize";
 

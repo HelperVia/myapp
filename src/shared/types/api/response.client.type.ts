@@ -3,4 +3,5 @@ export interface ResponseClientTypes<T> {
   data?: T | Record<string, never>;
   message?: string;
   error: string | null;
+  status: number;
 }

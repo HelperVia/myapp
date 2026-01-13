@@ -1,7 +1,7 @@
-import { TeamType } from "@/types/team/agent/agent.type";
+import { TeamType } from "@/types/team/teams.type";
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState: TeamType = {
+const initialState: Omit<TeamType, "departments"> = {
   agents: [],
 };
 const agentSlice = createSlice({
@@ -16,11 +16,20 @@ const agentSlice = createSlice({
         Object.assign(agent, changes);
       }
     },
+    addAgent(state, action) {
+      const newAgent = action.payload;
+      state.agents.push(newAgent);
+    },
+    deleteAgent(state, action) {
+      const idToDelete = action.payload;
+      state.agents = state.agents.filter((agent) => agent.id !== idToDelete);
+    },
     setAllAgents(state, action) {
       Object.assign(state.agents, action.payload);
     },
   },
 });
 
-export const { updateAgent, setAllAgents } = agentSlice.actions;
+export const { updateAgent, setAllAgents, deleteAgent, addAgent } =
+  agentSlice.actions;
 export default agentSlice.reducer;
